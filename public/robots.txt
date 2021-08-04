@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://next-typescript.basement.studio/
+Host: https://pomo-do-more.vercel.app/
 
 # Sitemaps
-Sitemap: https://next-typescript.basement.studio/sitemap.xml
+Sitemap: https://pomo-do-more.vercel.app/sitemap.xml

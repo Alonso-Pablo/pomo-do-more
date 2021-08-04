@@ -1,8 +1,8 @@
 {
-  "name": "next-typescript",
+  "name": "pomo-do-more",
   "version": "1.0.0",
   "description": "A minimalist's boilerplate — Next.js with TypeScript.",
-  "repository": "https://github.com/basementstudio/next-typescript",
+  "repository": "https://github.com/Alonso-Pablo/pomo-do-more",
   "author": "basement.studio",
   "private": true,
   "scripts": {

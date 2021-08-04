@@ -6,8 +6,8 @@ import NextHead from 'next/head'
 import { useMedia } from 'hooks/use-media'
 
 const defaultMeta = {
-  title: 'next-typescript | basement.studio',
-  description: `A minimalist's boilerplate — Next.js with TypeScript.`,
+  title: 'Pomo Do More',
+  description: `A minimalist Pomodoro clock for do more.`,
   ogImage: `${originURL}/og.png`
 }
 
