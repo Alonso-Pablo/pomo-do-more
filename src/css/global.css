@@ -14,10 +14,20 @@
     droid sans,
     helvetica neue,
     sans-serif;
+
   --font-body: 'Inter', var(--font-system), sans-serif;
+
+  --tomato-dark: #D35A44;
+  --tomato-main: #FF6347;
+  --tomato-light: #FF8873;
+  --gray: #C1C1C1;
+  --gray-light: #E6E6E6;
+  --white: #FFFFFF;
 }
 
 html {
+  height: 100%;
+  font-size: 62.5%;
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
   box-sizing: border-box;
@@ -29,5 +39,25 @@ html {
 }
 
 body {
+  height: 100%;
+
   font-family: var(--font-body);
+  background-color: var(--tomato-main);
+}
+
+#__next {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  padding: 2.4em 2.4em 2em 2.4em;
+}
+
+main {
+  width: 100%;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

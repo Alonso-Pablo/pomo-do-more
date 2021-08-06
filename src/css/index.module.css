@@ -1,0 +1,89 @@
+
+.todoList {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  max-width: 600px;
+  min-width: 272px;
+  min-height: 75px;
+  flex-direction: column;
+  padding: 1.3em 1.2em 1.2em 1.2em;
+  background-color: var(--tomato-dark);
+  border-radius: 4px;
+}
+
+
+
+.clockShadow {
+  width: 100%;
+  max-width: 600px;
+  min-width: 272px;
+  height: 145px;
+  margin: 2.1em 0;
+  background-color: var(--tomato-dark);
+  border-radius: 4px;
+}
+
+.clock {
+  position: relative;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 141px;
+  background-color: var(--tomato-light);
+  border-radius: 4px;
+}
+
+.timer {
+  font-size: 8.4rem;
+  font-weight: 700;
+  color: var(--white)
+}
+
+
+
+.separator {
+  width: 100%;
+  max-width: 600px;
+  height: 1px;
+  background-color: var(--tomato-dark);
+  border-bottom: 1px solid var(--tomato-light);
+}
+
+
+
+.controllerContainer {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2.1em;
+}
+
+.shadowController {
+  width: 112px;
+  height: 40px;
+  background-color: var(--gray);
+  border-radius: 4px;
+}
+
+.topController {
+  position: relative;
+  top: -12px;
+  display: flex;
+  width: 112px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--white);
+  border-radius: 4px;
+}
+
+.textController {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--tomato-dark)
+}

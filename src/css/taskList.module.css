@@ -1,0 +1,222 @@
+/* CONDITIONALS */
+/* display: none; */
+.displayNone {
+  display: none;
+}
+/* Grabing */
+.grabing {
+  cursor: grabbing;
+}
+.grab {
+  cursor: grab;
+}
+
+.backgroundGray {
+  background-color: var(--gray);
+}
+
+.shadowAddButton {
+  width: 100%;
+  height: 32px;
+  margin-bottom: 1.2em;
+  transition: height 0.5s;
+  background-color: var(--gray-light);
+  border-radius: 4px;
+}
+
+.topAddButtom {
+  position: relative;
+  top: -2px;
+  display: flex;
+  width: 100%;
+  height: 32px;
+  transition: height 0.5s;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--white);
+  border-radius: 4px;
+  margin-bottom: 1.2em;
+}
+
+.addButton {
+  width: 100%;
+  height: 100%;
+  padding-left: 1em;
+  border: none;
+}
+.cancelButton {
+  width: 23px;
+  height: 100%;
+  padding-left: 1em;
+  border: none;
+}
+
+.labelEstPomo {
+  padding-left: .6em;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--tomato-dark);
+  word-wrap: normal;
+
+}
+
+.inputTitleTask {
+  display: flex;
+  min-width: 100px;
+  height: 30px;
+  flex-grow: 1;
+  margin: 0 1em 0 .5em ;
+  padding-left: .6em;
+  background-color: var(--gray-light);
+  border-radius: 4px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--tomato-dark);
+}
+.inputTitleTask::placeholder {
+  color: var(--tomato-dark);
+  opacity: 0.5;
+}
+
+.inputEstPomo {
+  display: flex;
+  width: 35px;
+  height: 30px;
+  margin: 0 1em;
+  padding-left: .6em;
+  background-color: var(--gray-light);
+  border-radius: 4px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--tomato-dark);
+  text-overflow: ellipsis;
+}
+.inputEstPomo::placeholder {
+  color: var(--tomato-dark);
+  opacity: 0.5;
+}
+
+.enterButton {
+  display: flex;
+  min-width: 30px;
+  height: 32px;
+  margin-right: 1em;
+  background-color: var(--tomato-dark);
+  border-radius: 4px;
+}
+
+.enterTopButton {
+  display: flex;
+  position: relative;
+  top: -2%;
+  min-width: 30px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--tomato-main);
+  border-radius: 4px;
+
+}
+
+/* Transitions */
+.enlarging {
+  height: 50px;
+  transition: height 0.5s;
+}
+.svgNoRotated {
+  transform: rotate(0);
+  transition: all 0.5s;
+}
+
+.svgRotated {
+  transform: rotate(45deg);
+  transition: all 0.5s;
+}
+
+
+
+
+
+/* taskListContainer */
+.taskListContainer {
+  width: 100%;
+  margin: 0px auto;
+
+}
+
+.taskList {
+  width: 100%;
+  flex-grow: 1;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.taskList::-webkit-scrollbar {
+  width: 0px;
+  height: 8px;
+  background-color: var(--tomato-dark);
+  border-radius: 4px;
+ }/* TODO make the bar scroll style */
+
+.item {
+  position: relative;
+  width: 100%;
+  height: 52px;
+  /* padding: 1rem;
+  padding-left: 0; */
+  margin-bottom: 1rem;
+  list-style: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--tomato-dark);
+  background-color: var(--gray);
+  border-radius: 4px;
+  cursor: pointer;
+  filter: drop-shadow(0px 3px 4px var(--tomato-dark));
+}
+.itemTopSide {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--white);
+  border-radius: 4px;
+}
+
+.grippyPart {
+  width: 11px;
+  height: 100%;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  background-color: var(--gray-light);
+}
+.grippyPart:hover {
+}
+
+.textPart {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.moreOptionsContainer {
+  display: flex;
+  height: 100%;
+  width: 24px;
+  align-items: center;
+}
+
+.moreOptions {
+  display: flex;
+  width: 14px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+}
+.moreOptions:focus {
+  background-color: var(--gray-light);
+  outline: none;
+}
