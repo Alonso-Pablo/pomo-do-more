@@ -36,18 +36,14 @@ const TaskList: React.FC = () => {
     return
   }
 
-  interface Event {
-    preventDefault: () => void
-    target: {
-      nameTask: { value: string }
-      estPomo: { value: { toString: () => string } }
-    }
-  }
-
-  const handleForm = (e: Event) => {
+  const handleForm = (e: React.SyntheticEvent) => {
     e.preventDefault()
-    const nameTask: string = e.target.nameTask.value
-    const estPomo: string = e.target.estPomo.value.toString()
+    const target = e.target as typeof e.target & {
+      nameTask: { value: string }
+      estPomo: { value: number }
+    }
+    const nameTask = target.nameTask.value
+    const estPomo = target.estPomo.value.toString()
     const result: string[] = [nameTask, estPomo]
     // eslint-disable-next-line no-console
     console.log(result)
