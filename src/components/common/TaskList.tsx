@@ -2,14 +2,17 @@ import style from '../../css/taskList.module.css'
 import { useToggleState } from 'hooks/use-toggle-state'
 import clsx from 'clsx'
 
-import React from 'react'
+import { useState } from 'react'
 import List from './List'
 import { arrayMove } from '../../lib/utils/utils'
 
 const TaskList: React.FC = () => {
-  const [items, setItems] = React.useState(
-    Array.from(Array(8).keys()).map((val) => `Item ${val}`)
-  )
+  // const [items, setItems] = useState(
+  // Array.from(Array(2).keys()).map((val) => ['blablabla', val])
+  // )
+  // const [items, setItems] = useState<(string | number)[][]>([['Tarea ', 1]])
+
+  const [items, setItems] = useState<(string | number | undefined)[][]>([])
 
   const isAddNameTask = useToggleState(false)
   const isAddEstPomo = useToggleState(false)
@@ -42,11 +45,12 @@ const TaskList: React.FC = () => {
       nameTask: { value: string }
       estPomo: { value: number }
     }
-    const nameTask = target.nameTask.value
-    const estPomo = target.estPomo.value.toString()
-    const result: string[] = [nameTask, estPomo]
-    // eslint-disable-next-line no-console
-    console.log(result)
+
+    const taskInfo = [target.nameTask.value, target.estPomo.value]
+
+    if (taskInfo[0] === '') return false // If task don't have a name, return false
+    if (taskInfo[1] === '') taskInfo[1] = 3 // Default Estimated Pomodoros = 3
+    setItems(() => [...items, taskInfo])
   }
 
   return (

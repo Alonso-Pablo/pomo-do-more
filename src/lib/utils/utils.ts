@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export function arrayMove<T>(array: T[], from: number, to: number) {
   array = array.slice()
   array.splice(to < 0 ? array.length + to : to, 0, array.splice(from, 1)[0])
@@ -34,10 +35,10 @@ export function transformItem(
 ) {
   if (!element) return
   if (offsetY === null || offsetX === null) {
-    ;(element as HTMLElement).style.removeProperty('transform')
+    ; (element as HTMLElement).style.removeProperty('transform')
     return
   }
-  ;(
+  ; (
     element as HTMLElement
   ).style.transform = `translate(${offsetX}px, ${offsetY}px)`
 }
@@ -52,7 +53,7 @@ export function setItemTransition(
   timing?: string
 ) {
   if (element) {
-    ;(element as HTMLElement).style[
+    ; (element as HTMLElement).style[
       'transition' as any
     ] = `transform ${duration}ms${timing ? ` ${timing}` : ''}`
   }
