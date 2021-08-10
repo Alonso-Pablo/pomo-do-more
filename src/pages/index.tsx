@@ -9,9 +9,9 @@ import clsx from 'clsx'
 const HomePage: React.FC = () => {
   const pomo = {
     // eslint-disable-next-line prettier/prettier
-    'minutes': 0, // 25
+    'minutes': 25, // 25
     // eslint-disable-next-line prettier/prettier
-    'seconds': 4,
+    'seconds': 0,
     // eslint-disable-next-line prettier/prettier
     'isFocusTime': true,
     // eslint-disable-next-line prettier/prettier
@@ -19,9 +19,9 @@ const HomePage: React.FC = () => {
   }
   const shortBreak = {
     // eslint-disable-next-line prettier/prettier
-    'minutes': 0, // 5
+    'minutes': 5, // 5
     // eslint-disable-next-line prettier/prettier
-    'seconds': 10,
+    'seconds': 0,
     // eslint-disable-next-line prettier/prettier
     'isFocusTime': false,
     // eslint-disable-next-line prettier/prettier
@@ -92,7 +92,6 @@ const HomePage: React.FC = () => {
     }, 1000)
 
   useEffect(() => {
-    console.log('actualizado')
     if (isClockTiming.isOn) {
       if (technique[step].isFocusTime === true) {
         isFocusTime.handleOn()
