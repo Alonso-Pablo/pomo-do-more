@@ -3,20 +3,25 @@
   display: flex;
   overflow: hidden;
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
   min-width: 272px;
-  min-height: 75px;
+  /* min-height: 75px; */
+  /* min-height: 66px; */
   flex-direction: column;
   padding: 1.3em 1.2em 1.2em 1.2em;
   background-color: var(--tomato-dark);
   border-radius: 4px;
 }
+/* TODO - ANIMATED HEIGHT */
+.todoListFocus {
+  height: 78px;
+} 
 
 
 
 .clockShadow {
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
   min-width: 272px;
   height: 145px;
   margin: 2.1em 0;
@@ -56,16 +61,17 @@
 
 .controllerContainer {
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 2.1em;
+  border-top: 1px solid var(--tomato-light);
 }
 
 .shadowController {
   width: 112px;
   height: 40px;
+  margin: 2em 0;
   background-color: var(--gray);
   border-radius: 4px;
 }
@@ -81,9 +87,26 @@
   background-color: var(--white);
   border-radius: 4px;
 }
+.controllerPressed {
+  animation-duration: 0.5s;
+  animation-name: pressIn;
+  animation-fill-mode: forwards;
+}
 
 .textController {
   font-size: 2rem;
   font-weight: 700;
   color: var(--tomato-dark)
+}
+
+@keyframes pressIn {
+  0% {
+    top: -12px;
+  }
+  35% {
+    top: -1px;
+  }
+  100% {
+    top: -4px;
+  }
 }

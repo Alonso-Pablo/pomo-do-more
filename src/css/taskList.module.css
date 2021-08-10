@@ -3,6 +3,9 @@
 .displayNone {
   display: none;
 }
+.visibilityidden {
+  visibility:hidden
+}
 /* Grabing */
 .grabing {
   cursor: grabbing;
@@ -10,18 +13,55 @@
 .grab {
   cursor: grab;
 }
-
 .backgroundGray {
   background-color: var(--gray);
 }
 
+
+
+/* Break button Task */
+.breakTimeShadow {
+  width: 100%;
+  min-height: 50px;
+  list-style: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--tomato-dark);
+  background-color: var(--gray);
+  border-radius: 4px;
+  cursor: pointer;
+  filter: drop-shadow(0px 3px 4px var(--tomato-dark));
+}
+.breakTimeTopSide {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  top: -2px;
+  align-items: center;
+  background-color: var(--white);
+  border-radius: 4px;
+}
+.breakTimeTopSide:active {
+  top: 0;
+}
+.breakTimeText {
+   padding-left: 1.5rem;
+}
+
+
+/* Add button Task */
 .shadowAddButton {
   width: 100%;
   height: 32px;
-  margin-bottom: 1.2em;
-  transition: height 0.5s;
+  transition: height 0.4s;
   background-color: var(--gray-light);
   border-radius: 4px;
+}
+.marginAddButton {
+  margin-bottom: 1em;
 }
 
 .topAddButtom {
@@ -30,7 +70,7 @@
   display: flex;
   width: 100%;
   height: 32px;
-  transition: height 0.5s;
+  transition: height 0.4s;
   justify-content: space-between;
   align-items: center;
   background-color: var(--white);
@@ -80,9 +120,10 @@
 
 .inputEstPomo {
   display: flex;
-  width: 35px;
+  min-width: 35px;
+  max-width: 45px;
   height: 30px;
-  margin: 0 1em;
+  margin: 0 1rem 0 .5rem;
   padding-left: .6em;
   background-color: var(--gray-light);
   border-radius: 4px;
@@ -121,18 +162,17 @@
 /* Transitions */
 .enlarging {
   height: 50px;
-  transition: height 0.5s;
+  transition: height 0.4s;
 }
 .svgNoRotated {
   transform: rotate(0);
-  transition: all 0.5s;
+  transition: all 0.4s;
 }
 
 .svgRotated {
   transform: rotate(45deg);
-  transition: all 0.5s;
+  transition: all 0.4s;
 }
-
 
 
 
@@ -144,6 +184,8 @@
   flex-grow: 1;
   overflow-x: hidden;
   overflow-y: scroll;
+  padding-top: .2em;
+  border-radius: 4px;
 }
 .taskList::-webkit-scrollbar {
   width: 0px;
@@ -152,10 +194,13 @@
   border-radius: 4px;
  }/* TODO make the bar scroll style */
 
-.item {
-  position: relative;
+
+
+
+ /* Item - Individual */
+.itemShadow {
   width: 100%;
-  height: 52px;
+  min-height: 50px;
   margin-bottom: 1rem;
   list-style: none;
   font-size: 1.5rem;
@@ -167,38 +212,62 @@
   filter: drop-shadow(0px 3px 4px var(--tomato-dark));
 }
 .itemTopSide {
+  position: relative;
   display: flex;
   width: 100%;
-  height: 50px;
+  height: 100%;
+  flex-direction: column;
   justify-content: space-between;
+  top: -2px;
   align-items: center;
   background-color: var(--white);
   border-radius: 4px;
 }
+/* Effect Pressed - buttons */
+.itemTopSide:active {
+  top: 0;
+}
+
+/* itemTopSide - gryppy part,name task and more options */
+.nameTaskAndMoreOptions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .grippyPart {
-  width: 11px;
+  display: flex;
   height: 100%;
-  margin-right: 5px;
+  min-width: 15px;
+  min-height: 50px;
   border: none;
   border-radius: 4px 0 0 4px;
+  transition: opacity 0.5s;
+  opacity: 0;
   background-color: var(--gray-light);
 }
 .grippyPart:hover {
+  transition: opacity 0.3s;
+  opacity: 1;
 }
 
 .textPart {
   display: flex;
   height: 100%;
+  max-width: 436px;
   align-items: center;
+  padding: 1.3rem .5rem;
   flex-grow: 1;
 }
 
 .moreOptionsContainer {
   display: flex;
   height: 100%;
-  width: 24px;
+  min-width: 24px;
+  min-height: 50px;
   align-items: center;
+  align-self: flex-start;
 }
 
 .moreOptions {
@@ -212,4 +281,51 @@
 .moreOptions:focus {
   background-color: var(--gray-light);
   outline: none;
+}
+
+/* menuOptions - 3 buttons */
+
+.menuOptions {
+  display: flex;
+  width: 100%;
+  height: 36px;
+  justify-content: space-around;
+  align-self: flex-end;
+  border-radius: 4px;
+  background-color: var(--white);
+}
+
+.optionButtons {
+  min-width: 82px;
+  margin: .6rem 0;
+  flex-grow: 1;
+  font-size: 1.5rem;
+  font-weight: 600;
+
+  color: var(--tomato-dark);
+}
+.separatedButton {
+  border-right: 1px solid var(--gray-light);
+}
+
+
+/* MoreInformation */
+
+.moreInformationContainer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.moreInformation {
+  box-sizing: border-box;
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  margin: .6rem 1rem;
+  background-color: var(--tomato-dark);
+  border-radius: 4px;
+  padding: 0 .4em;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: white;
 }

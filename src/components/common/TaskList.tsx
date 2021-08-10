@@ -2,20 +2,37 @@ import style from '../../css/taskList.module.css'
 import { useToggleState } from 'hooks/use-toggle-state'
 import clsx from 'clsx'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import List from './List'
 import { arrayMove } from '../../lib/utils/utils'
 
-const TaskList: React.FC = () => {
-  // const [items, setItems] = useState(
-  // Array.from(Array(2).keys()).map((val) => ['blablabla', val])
-  // )
-  // const [items, setItems] = useState<(string | number)[][]>([['Tarea ', 1]])
+interface InterfaceProps {
+  isFocusTime: boolean
+  isBreakTime: boolean
+  nextMode: () => void
+}
 
-  const [items, setItems] = useState<(string | number | undefined)[][]>([])
+const TaskList: React.FC<InterfaceProps> = ({
+  isFocusTime,
+  isBreakTime,
+  nextMode
+}) => {
+  const [items, setItems] = useState<(string | number | boolean)[][]>([]) //4Prod
+
+  useEffect(() => {
+    // localStorage
+    if (Object.values(items).length === 0) {
+      if (localStorage.items) {
+        setItems(JSON.parse(localStorage.getItem('items') || '[]'))
+      }
+    } else {
+      localStorage.setItem('items', JSON.stringify(Object.values(items)))
+    }
+  }, [items])
 
   const isAddNameTask = useToggleState(false)
   const isAddEstPomo = useToggleState(false)
+  const isBreakMenuOpen = useToggleState(false)
 
   const handleAddCancelButton = () => {
     if (isAddNameTask.isOn === false) {
@@ -45,11 +62,16 @@ const TaskList: React.FC = () => {
       nameTask: { value: string }
       estPomo: { value: number }
     }
-
-    const taskInfo = [target.nameTask.value, target.estPomo.value]
-
+    const taskInfo = [
+      target.nameTask.value,
+      target.estPomo.value,
+      false, // Task options menu
+      false, // More info about the task
+      // false, // isEditing?
+      0 // total Pomos
+    ]
     if (taskInfo[0] === '') return false // If task don't have a name, return false
-    if (taskInfo[1] === '') taskInfo[1] = 3 // Default Estimated Pomodoros = 3
+    if (taskInfo[1] === '') taskInfo[1] = 4 // Default Estimated Pomodoros
     setItems(() => [...items, taskInfo])
   }
 
@@ -57,9 +79,61 @@ const TaskList: React.FC = () => {
     <>
       <div
         className={clsx(
+          style.breakTimeShadow,
+          !isBreakTime && style.displayNone
+        )}
+      >
+        <div className={clsx(style.breakTimeTopSide)}>
+          <div className={style.nameTaskAndMoreOptions}>
+            <div className={style.textPart}>
+              <span className={style.breakTimeText}>Break</span>
+            </div>
+            <div
+              onClick={isBreakMenuOpen.handleToggle}
+              className={clsx(style.moreOptionsContainer)}
+            >
+              <button className={style.moreOptions}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="4"
+                  height="20"
+                  viewBox="0 0 4 20"
+                  fill="none"
+                >
+                  <rect fill="#C1C1C1" y="8" width="4" height="4" rx="2" />
+                  <rect fill="#C1C1C1" y="8" width="4" height="4" rx="2" />
+                  <rect fill="#C1C1C1" y="16" width="4" height="4" rx="2" />
+                  <rect fill="#C1C1C1" y="16" width="4" height="4" rx="2" />
+                  <rect fill="#C1C1C1" width="4" height="4" rx="2" />
+                  <rect fill="#C1C1C1" width="4" height="4" rx="2" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            className={clsx(
+              style.displayNone,
+              isBreakMenuOpen.isOn && style.menuOptions
+            )}
+          >
+            <button
+              onClick={nextMode}
+              className={clsx(style.optionButtons, style.separatedButton)}
+            >
+              Skip
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className={clsx(
           style.shadowAddButton,
           isAddNameTask.isOn && style.enlarging,
-          isAddEstPomo.isOn && style.enlarging
+          isAddEstPomo.isOn && style.enlarging,
+          isFocusTime && style.displayNone,
+          isBreakTime && style.displayNone,
+          items.length && style.marginAddButton
         )}
       >
         <form
@@ -200,40 +274,117 @@ const TaskList: React.FC = () => {
         )}
         renderItem={({ value, props, isDragged }) => (
           <li
+            key={props.key}
             {...props}
-            className={style.item}
             style={{
               ...props.style
             }}
+            className={clsx(
+              style.itemShadow,
+              isFocusTime && props.key !== 0 && style.displayNone,
+              isBreakTime && style.displayNone
+            )}
           >
-            <div className={style.itemTopSide}>
-              <button
-                data-movable-handle
-                className={style.grippyPart}
-                style={{
-                  cursor: isDragged ? 'grabbing' : 'grab'
-                }}
-                tabIndex={-1}
-              ></button>
-              <div className={style.textPart}>
-                <span>{value}</span>
+            <div className={clsx(style.itemTopSide)}>
+              <div className={style.nameTaskAndMoreOptions}>
+                <button
+                  data-movable-handle
+                  className={clsx(
+                    style.grippyPart,
+                    isFocusTime && style.visibilityidden
+                  )}
+                  style={{
+                    cursor: isDragged ? 'grabbing' : 'grab'
+                  }}
+                  tabIndex={-1}
+                ></button>
+                <div
+                  onClick={() => {
+                    const { key = 0 } = props
+                    const array = items
+                    array[key][3] = !array[key][3]
+                    setItems(array)
+                    return setItems(Object.values(items))
+                  }}
+                  className={style.textPart}
+                >
+                  <span>{value[0]}</span>
+                </div>
+                <div
+                  onClick={() => {
+                    const { key = 0 } = props
+                    const array = items
+                    array[key][2] = !array[key][2]
+                    setItems(array)
+                    return setItems(Object.values(items))
+                  }}
+                  className={clsx(
+                    style.moreOptionsContainer,
+                    isFocusTime && style.visibilityidden
+                  )}
+                >
+                  <button className={style.moreOptions}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="4"
+                      height="20"
+                      viewBox="0 0 4 20"
+                      fill="none"
+                    >
+                      <rect fill="#C1C1C1" y="8" width="4" height="4" rx="2" />
+                      <rect fill="#C1C1C1" y="8" width="4" height="4" rx="2" />
+                      <rect fill="#C1C1C1" y="16" width="4" height="4" rx="2" />
+                      <rect fill="#C1C1C1" y="16" width="4" height="4" rx="2" />
+                      <rect fill="#C1C1C1" width="4" height="4" rx="2" />
+                      <rect fill="#C1C1C1" width="4" height="4" rx="2" />
+                    </svg>
+                  </button>
+                </div>
               </div>
-              <div className={style.moreOptionsContainer}>
-                <button className={style.moreOptions}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="4"
-                    height="20"
-                    viewBox="0 0 4 20"
-                    fill="none"
-                  >
-                    <rect fill="#C1C1C1" y="8" width="4" height="4" rx="2" />
-                    <rect fill="#C1C1C1" y="8" width="4" height="4" rx="2" />
-                    <rect fill="#C1C1C1" y="16" width="4" height="4" rx="2" />
-                    <rect fill="#C1C1C1" y="16" width="4" height="4" rx="2" />
-                    <rect fill="#C1C1C1" width="4" height="4" rx="2" />
-                    <rect fill="#C1C1C1" width="4" height="4" rx="2" />
-                  </svg>
+
+              <div
+                className={clsx(
+                  style.displayNone,
+                  value[3] && style.moreInformationContainer
+                )}
+              >
+                <div className={style.moreInformation}>
+                  <p>Pomodoros: {value[4]}</p>
+                  <p>Estimated: {value[1]}</p>
+                </div>
+              </div>
+
+              <div
+                className={clsx(
+                  style.displayNone,
+                  value[2] && style.menuOptions
+                )}
+              >
+                <button
+                  className={clsx(style.optionButtons, style.separatedButton)}
+                >
+                  Done
+                </button>
+                <button
+                  className={clsx(style.optionButtons, style.separatedButton)}
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => {
+                    const { key = 0 } = props
+                    const array = items
+                    array.splice(key, 1)
+                    setItems(array)
+                    setItems(Object.values(items))
+                    if (items.length === 0) {
+                      return localStorage.removeItem('items')
+                    }
+                    return
+                  }}
+                  className={style.optionButtons}
+                >
+                  Remove
                 </button>
               </div>
             </div>
