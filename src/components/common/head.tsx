@@ -3,7 +3,6 @@ import { originURL } from 'lib/constants'
 import { useRouter } from 'next/dist/client/router'
 import { useMemo } from 'react'
 import NextHead from 'next/head'
-import { useMedia } from 'hooks/use-media'
 
 const defaultMeta = {
   title: 'Pomo Do More',
@@ -22,7 +21,6 @@ export type HeadProps = Meta & { rawNextSeoProps?: NextSeoProps }
 
 const Head = (props: HeadProps) => {
   const router = useRouter()
-  const isDark = useMedia('(prefers-color-scheme: dark)')
 
   const nextSeoProps: NextSeoProps = useMemo(() => {
     return {
@@ -47,7 +45,7 @@ const Head = (props: HeadProps) => {
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=0"
         />
         <meta name="theme-color" content="#ffffff" />
-        <link rel="icon" href={isDark ? '/favicon-dark.svg' : '/favicon.svg'} />
+        <link rel="icon" href="/favicon.svg" />
         <link rel="mask-icon" href="/favicon.svg" color="#000" />
       </NextHead>
     </>
