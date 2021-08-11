@@ -15,7 +15,22 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head />
+        <Head>
+          <meta property="twitter:card" content="summary_large_image" />
+          <meta
+            property="twitter:url"
+            content="https://pomo-do-more.vercel.app/"
+          />
+          <meta property="twitter:title" content="&#127813; Pomo Do More" />
+          <meta
+            property="twitter:description"
+            content="A minimalist Pomodoro clock for do more."
+          />
+          <meta
+            property="twitter:image:src"
+            content="https://github.com/Alonso-Pablo/pomo-do-more/blob/master/public/og.png"
+          />
+        </Head>
         <body>
           <Main />
           <NextScript />

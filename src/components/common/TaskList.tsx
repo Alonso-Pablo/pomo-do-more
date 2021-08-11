@@ -82,13 +82,12 @@ const TaskList: React.FC<InterfaceProps> = ({
     totaPom: number
   ) => {
     e.preventDefault()
-    const compensationIndex = 1
     const target = e.target as typeof e.target & {
       newNameTask: { value: string }
       newEstPomo: { value: string }
     }
     const newItems = items
-    newItems[indexItem - compensationIndex] = [
+    newItems[indexItem] = [
       target.newNameTask.value,
       Number(target.newEstPomo.value),
       false, // Task options menu
@@ -370,16 +369,27 @@ const TaskList: React.FC<InterfaceProps> = ({
               </div>
 
               <form
-                onSubmit={(e) =>
-                  handleEditForm(e, (props.key = 1), Number(value[5]))
-                }
+                onSubmit={(e) => {
+                  const { key = 0 } = props
+                  handleEditForm(e, key, Number(value[5]))
+                }}
                 className={clsx(
                   style.displayNone,
                   value[4] && style.editTaskContainer
                 )}
               >
                 <div className={style.editTaskTop}>
-                  <button className={style.editCancel}>
+                  <button
+                    onClick={() => {
+                      const { key = 0 } = props
+                      const newItems = items
+                      newItems[key][4] = false
+                      setItems(newItems)
+                      return setItems(Object.values(items))
+                    }}
+                    className={style.editCancel}
+                    type="button"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="10"
