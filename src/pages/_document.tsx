@@ -28,7 +28,7 @@ class MyDocument extends Document {
           />
           <meta
             property="twitter:image:src"
-            content="https://github.com/Alonso-Pablo/pomo-do-more/blob/master/public/og.png"
+            content="https://raw.githubusercontent.com/Alonso-Pablo/pomo-do-more/master/public/og.png"
           />
         </Head>
         <body>
