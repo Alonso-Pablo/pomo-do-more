@@ -22,7 +22,6 @@
 .clockShadow {
   width: 100%;
   max-width: 500px;
-  min-width: 272px;
   height: 145px;
   margin: 2.1em 0;
   background-color: var(--tomato-dark);
@@ -31,32 +30,27 @@
 
 .clock {
   position: relative;
-  top: 0;
+  width: 100%;
+  height: 100%;
+  top: -4px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 141px;
+
   background-color: var(--tomato-light);
   border-radius: 4px;
+  cursor: pointer;
+}
+.clock:active {
+  top: 0px;
 }
 
 .timer {
   font-size: 8.4rem;
   font-weight: 700;
-  color: var(--white)
+  color: var(--white);
+  user-select: none;
 }
-
-
-
-.separator {
-  width: 100%;
-  max-width: 600px;
-  height: 1px;
-  background-color: var(--tomato-dark);
-  border-bottom: 1px solid var(--tomato-light);
-}
-
 
 
 .controllerContainer {
@@ -88,25 +82,28 @@
   border-radius: 4px;
 }
 .controllerPressed {
-  animation-duration: 0.5s;
-  animation-name: pressIn;
-  animation-fill-mode: forwards;
+  animation: pressIn 0.5s forwards;
 }
-
+  @media (prefers-reduced-motion) {
+    .controllerPressed {
+      animation-name: dissolve;
+      top: -4px;
+    }
+  }
+  @keyframes pressIn {
+    0% {
+      top: -12px;
+    }
+    35% {
+      top: -1px;
+    }
+    100% {
+      top: -4px;
+    }
+  }
 .textController {
   font-size: 2rem;
   font-weight: 700;
   color: var(--tomato-dark)
 }
 
-@keyframes pressIn {
-  0% {
-    top: -12px;
-  }
-  35% {
-    top: -1px;
-  }
-  100% {
-    top: -4px;
-  }
-}

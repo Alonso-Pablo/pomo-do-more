@@ -10,12 +10,16 @@ interface InterfaceProps {
   isFocusTime: boolean
   isBreakTime: boolean
   nextMode: () => void
+  increasePomoIsOn: boolean
+  increasePomoHandleOff: () => void
 }
 
 const TaskList: React.FC<InterfaceProps> = ({
   isFocusTime,
   isBreakTime,
-  nextMode
+  nextMode,
+  increasePomoIsOn,
+  increasePomoHandleOff
 }) => {
   const [items, setItems] = useState<(string | number | boolean)[][]>([]) //4Prod
 
@@ -28,7 +32,12 @@ const TaskList: React.FC<InterfaceProps> = ({
     } else {
       localStorage.setItem('items', JSON.stringify(Object.values(items)))
     }
-  }, [items])
+    if (increasePomoIsOn && items.length > 0) {
+      const newItems = items
+      newItems[0][5] = Number(newItems[0][5]) + 1
+      return increasePomoHandleOff()
+    }
+  }, [items, increasePomoIsOn])
 
   const isAddNameTask = useToggleState(false)
   const isAddEstPomo = useToggleState(false)
@@ -69,7 +78,8 @@ const TaskList: React.FC<InterfaceProps> = ({
       false, // Task options menu
       false, // More info about the task
       false, // isEditing?
-      0 // total Pomos
+      0, // total Pomos
+      false // The Task is finished
     ]
     if (taskInfo[0] === '') return false // If task don't have a name, return false
     if (taskInfo[1] === '') taskInfo[1] = defaultPomos // Default Estimated Pomodoros
@@ -79,7 +89,8 @@ const TaskList: React.FC<InterfaceProps> = ({
   const handleEditForm = (
     e: React.SyntheticEvent,
     indexItem: number,
-    totaPom: number
+    totaPom: number,
+    isTaskFinished: boolean | string | number
   ) => {
     e.preventDefault()
     const target = e.target as typeof e.target & {
@@ -93,7 +104,8 @@ const TaskList: React.FC<InterfaceProps> = ({
       false, // Task options menu
       false, // More info about the task
       false, // isEditing?
-      totaPom
+      totaPom,
+      isTaskFinished
     ]
     setItems(newItems)
     return setItems(Object.values(items))
@@ -137,7 +149,7 @@ const TaskList: React.FC<InterfaceProps> = ({
           <div
             className={clsx(
               style.displayNone,
-              isBreakMenuOpen.isOn && style.menuOptions
+              isBreakMenuOpen.isOn && style.breakMenuOptions
             )}
           >
             <button
@@ -334,7 +346,13 @@ const TaskList: React.FC<InterfaceProps> = ({
                   }}
                   className={style.textPart}
                 >
-                  <span>{value[0]}</span>
+                  {value[6] ? (
+                    <span>{value[0]}</span>
+                  ) : (
+                    <del>
+                      <span>{value[0]}</span>
+                    </del>
+                  )}
                 </div>
                 <div
                   onClick={() => {
@@ -371,7 +389,7 @@ const TaskList: React.FC<InterfaceProps> = ({
               <form
                 onSubmit={(e) => {
                   const { key = 0 } = props
-                  handleEditForm(e, key, Number(value[5]))
+                  handleEditForm(e, key, Number(value[5]), value[6])
                 }}
                 className={clsx(
                   style.displayNone,
@@ -504,9 +522,16 @@ const TaskList: React.FC<InterfaceProps> = ({
                 )}
               >
                 <button
+                  onClick={() => {
+                    const { key = 0 } = props
+                    const newItems = items
+                    newItems[key][6] = !newItems[key][6]
+                    setItems(newItems)
+                    return setItems(Object.values(items))
+                  }}
                   className={clsx(style.optionButtons, style.separatedButton)}
                 >
-                  Done
+                  {value[6] ? 'Done' : 'Undone'}
                 </button>
                 <button
                   onClick={() => {

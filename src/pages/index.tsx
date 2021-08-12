@@ -52,6 +52,8 @@ const HomePage: React.FC = () => {
   const isFocusTime = useToggleState(false)
   const isBreakTime = useToggleState(false)
 
+  const increasePomo = useToggleState(false)
+
   const isClockTiming = useToggleState(false)
   const oneDigitNumb = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
   const [minutes, setMinutes] = useState(technique[step].minutes)
@@ -72,6 +74,7 @@ const HomePage: React.FC = () => {
       // Al terminar FocusTime no muestra las tareas, solo muestra "Break"
       isFocusTime.handleOff()
       isBreakTime.handleOn()
+      increasePomo.handleOn()
     }
   }
 
@@ -91,6 +94,11 @@ const HomePage: React.FC = () => {
       nextMode()
     }, 1000)
 
+  // const resetClock = () => {
+  //   setMinutes(technique[step].minutes)
+  //   setSeconds(technique[step].seconds)
+  // }
+
   useEffect(() => {
     if (isClockTiming.isOn) {
       if (technique[step].isFocusTime === true) {
@@ -108,7 +116,7 @@ const HomePage: React.FC = () => {
   }, [isClockTiming, isFocusTime, isBreakTime, step, nextMode])
 
   return (
-    <PageLayout headProps={{ title: 'Pomo For Do More | Alonso Pablo' }}>
+    <PageLayout headProps={{ title: 'Pomo Do More' }}>
       <Container
         className={clsx(
           style.todoList
@@ -118,12 +126,19 @@ const HomePage: React.FC = () => {
         <TaskList
           isFocusTime={isFocusTime.isOn}
           isBreakTime={isBreakTime.isOn}
-          // isClockTiming={isClockTiming}
           nextMode={nextMode}
+          increasePomoIsOn={increasePomo.isOn}
+          increasePomoHandleOff={increasePomo.handleOff}
         />
       </Container>
 
-      <div className={style.clockShadow}>
+      <div
+        onClick={() => {
+          setMinutes(technique[step].minutes)
+          setSeconds(technique[step].seconds)
+        }}
+        className={style.clockShadow}
+      >
         <Container className={style.clock}>
           <p className={style.timer}>
             {oneDigitNumb.includes(minutes) ? 0 : null}
