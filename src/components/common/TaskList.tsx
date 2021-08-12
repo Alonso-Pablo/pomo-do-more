@@ -5,26 +5,19 @@ import clsx from 'clsx'
 import { useState, useEffect } from 'react'
 import List from './List'
 import { arrayMove } from '../../lib/utils/utils'
+import { TaskListProps } from 'ts/types'
 
-interface InterfaceProps {
-  isFocusTime: boolean
-  isBreakTime: boolean
-  nextMode: () => void
-  increasePomoIsOn: boolean
-  increasePomoHandleOff: () => void
-}
-
-const TaskList: React.FC<InterfaceProps> = ({
+const TaskList: React.FC<TaskListProps> = ({
   isFocusTime,
   isBreakTime,
   nextMode,
   increasePomoIsOn,
   increasePomoHandleOff
 }) => {
-  const [items, setItems] = useState<(string | number | boolean)[][]>([]) //4Prod
+  const [items, setItems] = useState<(string | number | boolean)[][]>([])
 
   useEffect(() => {
-    // localStorage
+    // save or load fromlocalStorage
     if (Object.values(items).length === 0) {
       if (localStorage.items) {
         setItems(JSON.parse(localStorage.getItem('items') || '[]'))
@@ -32,12 +25,13 @@ const TaskList: React.FC<InterfaceProps> = ({
     } else {
       localStorage.setItem('items', JSON.stringify(Object.values(items)))
     }
+    // increase the number of pomodoros made
     if (increasePomoIsOn && items.length > 0) {
       const newItems = items
       newItems[0][5] = Number(newItems[0][5]) + 1
       return increasePomoHandleOff()
     }
-  }, [items, increasePomoIsOn])
+  }, [items, increasePomoIsOn, increasePomoHandleOff])
 
   const isAddNameTask = useToggleState(false)
   const isAddEstPomo = useToggleState(false)
@@ -347,11 +341,11 @@ const TaskList: React.FC<InterfaceProps> = ({
                   className={style.textPart}
                 >
                   {value[6] ? (
-                    <span>{value[0]}</span>
-                  ) : (
                     <del>
                       <span>{value[0]}</span>
                     </del>
+                  ) : (
+                    <span>{value[0]}</span>
                   )}
                 </div>
                 <div
@@ -531,7 +525,7 @@ const TaskList: React.FC<InterfaceProps> = ({
                   }}
                   className={clsx(style.optionButtons, style.separatedButton)}
                 >
-                  {value[6] ? 'Done' : 'Undone'}
+                  {value[6] ? 'Undone' : 'Done'}
                 </button>
                 <button
                   onClick={() => {

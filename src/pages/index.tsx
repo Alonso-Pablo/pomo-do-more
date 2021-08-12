@@ -1,10 +1,10 @@
 import PageLayout from 'components/layout/page'
-import Container from 'components/layout/container'
 import { useEffect, useState } from 'react'
 import style from '../css/index.module.css'
 import { useToggleState } from 'hooks/use-toggle-state'
 import TaskList from '../components/common/TaskList'
 import clsx from 'clsx'
+import Clock from '../components/sections/HomePage/Clock'
 
 const HomePage: React.FC = () => {
   const pomo = {
@@ -55,7 +55,7 @@ const HomePage: React.FC = () => {
   const increasePomo = useToggleState(false)
 
   const isClockTiming = useToggleState(false)
-  const oneDigitNumb = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  // const oneDigitNumb = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
   const [minutes, setMinutes] = useState(technique[step].minutes)
   const [seconds, setSeconds] = useState(technique[step].seconds)
 
@@ -94,11 +94,6 @@ const HomePage: React.FC = () => {
       nextMode()
     }, 1000)
 
-  // const resetClock = () => {
-  //   setMinutes(technique[step].minutes)
-  //   setSeconds(technique[step].seconds)
-  // }
-
   useEffect(() => {
     if (isClockTiming.isOn) {
       if (technique[step].isFocusTime === true) {
@@ -117,7 +112,7 @@ const HomePage: React.FC = () => {
 
   return (
     <PageLayout headProps={{ title: 'Pomo Do More' }}>
-      <Container
+      <div
         className={clsx(
           style.todoList
           // isFocusTime.isOn && style.todoListFocus
@@ -130,23 +125,38 @@ const HomePage: React.FC = () => {
           increasePomoIsOn={increasePomo.isOn}
           increasePomoHandleOff={increasePomo.handleOff}
         />
-      </Container>
+      </div>
 
-      <div
+      {/* <div
         onClick={() => {
-          setMinutes(technique[step].minutes)
-          setSeconds(technique[step].seconds)
+          isClockTiming.handleOff()
+          isFocusTime.handleOff()
+          setTimeout(() => {
+            setMinutes(technique[step].minutes)
+            setSeconds(technique[step].seconds)
+          }, 1001)
         }}
         className={style.clockShadow}
       >
-        <Container className={style.clock}>
+        <div className={style.clock}>
           <p className={style.timer}>
             {oneDigitNumb.includes(minutes) ? 0 : null}
             {minutes}:{oneDigitNumb.includes(seconds) ? 0 : null}
             {seconds}
           </p>
-        </Container>
-      </div>
+        </div>
+      </div> */}
+
+      <Clock
+        stopClock={isClockTiming.handleOff}
+        stopFocusTime={isFocusTime.handleOff}
+        initialMinutes={technique[step].minutes}
+        initialSeconds={technique[step].seconds}
+        setMinutes={setMinutes}
+        setSeconds={setSeconds}
+        minutes={minutes}
+        seconds={seconds}
+      />
 
       <div className={style.controllerContainer}>
         <button

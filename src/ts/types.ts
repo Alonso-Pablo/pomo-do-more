@@ -1,7 +1,25 @@
 // Here will go general types you define
 
-export type Test = { key: string }
+import { Dispatch, SetStateAction } from 'react'
 
+export type Test = { key: string }
+export interface ClockProps {
+  stopClock: () => void
+  stopFocusTime: () => void
+  initialMinutes: number
+  initialSeconds: number
+  setMinutes: Dispatch<SetStateAction<number>>
+  setSeconds: Dispatch<SetStateAction<number>>
+  minutes: number
+  seconds: number
+}
+export interface TaskListProps {
+  isFocusTime: boolean
+  isBreakTime: boolean
+  nextMode: () => void
+  increasePomoIsOn: boolean
+  increasePomoHandleOff: () => void
+}
 interface IVoiceover {
   item: (position: number) => string
   lifted: (position: number) => string
