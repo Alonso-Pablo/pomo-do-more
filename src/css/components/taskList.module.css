@@ -17,178 +17,6 @@
   background-color: var(--gray);
 }
 
-/* Break button Task */
-.breakTimeShadow {
-  position: relative;
-  width: 100%;
-  min-height: 50px;
-  list-style: none;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--tomato-dark);
-  background-color: var(--gray);
-  border-radius: 4px;
-  cursor: pointer;
-  filter: drop-shadow(0px 3px 4px var(--tomato-dark));
-  animation: taskUp 0.8s forwards;
-}
-
-  @media (prefers-reduced-motion) {
-    .breakTimeShadow {
-    animation-name: dissolve;
-    }
-  }
-  @keyframes taskUp {
-    0% {
-      top: 60px;
-    }
-    60% {
-      top: -6px;
-    }
-    100% {
-      top: 0px;
-    }
-  }
-.breakTimeTopSide {
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  top: -2px;
-  align-items: center;
-  background-color: var(--white);
-  border-radius: 4px;
-
-}
-.breakTimeTopSide:active {
-  top: 0;
-}
-.breakTimeText {
-   padding-left: 1.5rem;
-}
-.breakMenuOptions {
-  display: flex;
-  width: 100%;
-  height: 36px;
-  justify-content: space-around;
-  align-self: flex-end;
-  border-radius: 4px;
-  background-color: var(--white);
-}
-
-
-
-/* Add button Task */
-.shadowAddButton {
-  position: relative;
-  width: 100%;
-  height: 32px;
-  transition: height 0.4s;
-  background-color: var(--gray-light);
-  border-radius: 4px;
-}
-.marginAddButton {
-  margin-bottom: 1em;
-}
-
-
-.topAddBottom {
-  position: relative;
-  top: -2px;
-  display: flex;
-  width: 100%;
-  height: 32px;
-  transition: height 0.4s;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--white);
-  border-radius: 4px;
-  margin-bottom: 1.2em;
-}
-
-.addButton {
-  width: 100%;
-  height: 100%;
-  padding-left: 1em;
-  border: none;
-}
-.cancelButton {
-  width: 23px;
-  height: 100%;
-  padding-left: 1em;
-  border: none;
-}
-
-.labelEstPomo {
-  padding-left: .6em;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--tomato-dark);
-  word-wrap: normal;
-
-}
-
-.inputTitleTask {
-  display: flex;
-  min-width: 100px;
-  height: 30px;
-  flex-grow: 1;
-  margin: 0 1em 0 .5em ;
-  padding: 0 .6em;
-  background-color: var(--gray-light);
-  border-radius: 4px;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--tomato-dark);
-}
-.inputTitleTask::placeholder {
-  color: var(--tomato-dark);
-  opacity: 0.5;
-}
-
-.inputEstPomo {
-  display: flex;
-  min-width: 35px;
-  max-width: 45px;
-  height: 30px;
-  margin: 0 1rem 0 .5rem;
-  padding-left: .6em;
-  background-color: var(--gray-light);
-  border-radius: 4px;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--tomato-dark);
-  text-overflow: ellipsis;
-}
-.inputEstPomo::placeholder {
-  color: var(--tomato-dark);
-  opacity: 0.5;
-}
-
-.enterButton {
-  display: flex;
-  min-width: 30px;
-  height: 32px;
-  margin-right: 1em;
-  background-color: var(--tomato-dark);
-  border-radius: 4px;
-}
-
-.enterTopButton {
-  display: flex;
-  position: relative;
-  top: -2%;
-  min-width: 30px;
-  height: 30px;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--tomato-main);
-  border-radius: 4px;
-
-}
-
 /* Transitions */
 .enlarging {
   height: 50px;
@@ -318,6 +146,26 @@
 .moreOptions:focus {
   background-color: var(--gray-light);
   outline: none;
+}
+.enterButton {
+  display: flex;
+  min-width: 30px;
+  height: 32px;
+  margin-right: 1em;
+  background-color: var(--tomato-dark);
+  border-radius: 4px;
+}
+.enterTopButton {
+  display: flex;
+  position: relative;
+  top: -2%;
+  min-width: 30px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--tomato-main);
+  border-radius: 4px;
+
 }
 
 

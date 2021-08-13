@@ -2,16 +2,26 @@
 
 import { Dispatch, SetStateAction } from 'react'
 
+// import { Dispatch, SetStateAction } from 'react'
+
 export type Test = { key: string }
+
+export interface AddButtonProps {
+  items: (string | number | boolean)[][]
+  setItems: Dispatch<SetStateAction<(string | number | boolean)[][]>>
+  isFocusTime: boolean
+  isBreakTime: boolean
+}
+export interface BreakButtonProps {
+  isBreakTime: boolean
+  handleBreakMenuOpen: () => void
+  isBreakMenuOpen: boolean
+  nextMode: () => void
+  restartClock: () => void
+}
 export interface ClockProps {
-  stopClock: () => void
-  stopFocusTime: () => void
-  initialMinutes: number
-  initialSeconds: number
-  setMinutes: Dispatch<SetStateAction<number>>
-  setSeconds: Dispatch<SetStateAction<number>>
-  minutes: number
-  seconds: number
+  restartClock: () => void
+  timeRest: number
 }
 export interface TaskListProps {
   isFocusTime: boolean
@@ -19,6 +29,7 @@ export interface TaskListProps {
   nextMode: () => void
   increasePomoIsOn: boolean
   increasePomoHandleOff: () => void
+  restartClock: () => void
 }
 interface IVoiceover {
   item: (position: number) => string

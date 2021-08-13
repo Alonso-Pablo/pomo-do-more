@@ -1,44 +1,30 @@
-import PageLayout from 'components/layout/page'
-import { useEffect, useState } from 'react'
-import style from '../css/index.module.css'
-import { useToggleState } from 'hooks/use-toggle-state'
-import TaskList from '../components/common/TaskList'
+import { useState } from 'react'
+import style from '../css/components/index.module.css'
 import clsx from 'clsx'
-import Clock from '../components/sections/HomePage/Clock'
+import PageLayout from 'components/layout/page'
+import TaskList from '../components/sections/TaskList'
+import Clock from '../components/sections/Clock'
+import { useToggleState } from 'hooks/use-toggle-state'
+import { useClock } from 'hooks/useClock'
 
 const HomePage: React.FC = () => {
   const pomo = {
-    // eslint-disable-next-line prettier/prettier
-    'minutes': 25, // 25
-    // eslint-disable-next-line prettier/prettier
-    'seconds': 0,
-    // eslint-disable-next-line prettier/prettier
-    'isFocusTime': true,
-    // eslint-disable-next-line prettier/prettier
-    'isBreakTime': false
+    timeTotal: 1500,
+    // timeTotal: 3, //4dev
+    isFocusTime: true
   }
   const shortBreak = {
-    // eslint-disable-next-line prettier/prettier
-    'minutes': 5, // 5
-    // eslint-disable-next-line prettier/prettier
-    'seconds': 0,
-    // eslint-disable-next-line prettier/prettier
-    'isFocusTime': false,
-    // eslint-disable-next-line prettier/prettier
-    'isBreakTime': true
+    timeTotal: 300,
+    // timeTotal: 2, //4dev
+    isFocusTime: false
   }
   const longBreak = {
-    // eslint-disable-next-line prettier/prettier
-    'minutes': 30,
-    // eslint-disable-next-line prettier/prettier
-    'seconds': 0,
-    // eslint-disable-next-line prettier/prettier
-    'isFocusTime': false,
-    // eslint-disable-next-line prettier/prettier
-    'isBreakTime': true
+    timeTotal: 1800,
+    // timeTotal: 4, //4dev
+    isFocusTime: false
   }
 
-  const [technique] = useState([
+  const [modes] = useState([
     pomo,
     shortBreak,
     pomo,
@@ -48,25 +34,18 @@ const HomePage: React.FC = () => {
   ])
 
   const [step, setStep] = useState(0)
-
   const isFocusTime = useToggleState(false)
   const isBreakTime = useToggleState(false)
-
   const increasePomo = useToggleState(false)
 
-  const isClockTiming = useToggleState(false)
-  // const oneDigitNumb = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-  const [minutes, setMinutes] = useState(technique[step].minutes)
-  const [seconds, setSeconds] = useState(technique[step].seconds)
+  const newClock = useClock(modes[step].timeTotal)
 
   const nextMode = () => {
-    let newStep = step
-    newStep === 5 ? (newStep = 0) : (newStep += 1)
-    setStep(newStep)
-    setMinutes(technique[newStep].minutes)
-    setSeconds(technique[newStep].seconds)
+    let nextStep = step
+    nextStep === 5 ? (nextStep = 0) : (nextStep += 1)
+    setStep(nextStep)
 
-    if (technique[newStep].isFocusTime === true) {
+    if (modes[nextStep].isFocusTime === true) {
       // Al terminar BreakTime vuelve a mostrar todas las tareas.
       isFocusTime.handleOff()
       isBreakTime.handleOff()
@@ -78,95 +57,46 @@ const HomePage: React.FC = () => {
     }
   }
 
-  const ticToc = () =>
-    setTimeout(() => {
-      if (minutes > 0) {
-        if (seconds > 0) {
-          return setSeconds(seconds - 1)
-        }
-        setSeconds(59)
-        return setMinutes(minutes - 1)
-      }
-      if (seconds > 0) {
-        return setSeconds(seconds - 1)
-      } // if 00:00 => Ejecuta:
-      isClockTiming.handleOff()
-      nextMode()
-    }, 1000)
-
-  useEffect(() => {
-    if (isClockTiming.isOn) {
-      if (technique[step].isFocusTime === true) {
-        isFocusTime.handleOn()
-        isBreakTime.handleOff()
-      } else {
-        isFocusTime.handleOff()
-        isBreakTime.handleOn()
-      }
-      ticToc()
-    } else {
-      return
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isClockTiming, isFocusTime, isBreakTime, step, nextMode])
+  if (newClock.timeRest === -1) {
+    nextMode()
+  }
 
   return (
     <PageLayout headProps={{ title: 'Pomo Do More' }}>
-      <div
-        className={clsx(
-          style.todoList
-          // isFocusTime.isOn && style.todoListFocus
-        )}
-      >
+      <div className={clsx(style.todoList)}>
         <TaskList
           isFocusTime={isFocusTime.isOn}
           isBreakTime={isBreakTime.isOn}
           nextMode={nextMode}
           increasePomoIsOn={increasePomo.isOn}
           increasePomoHandleOff={increasePomo.handleOff}
+          restartClock={newClock.restartHandler}
         />
       </div>
 
-      {/* <div
-        onClick={() => {
-          isClockTiming.handleOff()
-          isFocusTime.handleOff()
-          setTimeout(() => {
-            setMinutes(technique[step].minutes)
-            setSeconds(technique[step].seconds)
-          }, 1001)
-        }}
-        className={style.clockShadow}
-      >
-        <div className={style.clock}>
-          <p className={style.timer}>
-            {oneDigitNumb.includes(minutes) ? 0 : null}
-            {minutes}:{oneDigitNumb.includes(seconds) ? 0 : null}
-            {seconds}
-          </p>
-        </div>
-      </div> */}
-
       <Clock
-        stopClock={isClockTiming.handleOff}
-        stopFocusTime={isFocusTime.handleOff}
-        initialMinutes={technique[step].minutes}
-        initialSeconds={technique[step].seconds}
-        setMinutes={setMinutes}
-        setSeconds={setSeconds}
-        minutes={minutes}
-        seconds={seconds}
+        restartClock={newClock.restartHandler}
+        timeRest={newClock.timeRest}
       />
 
       <div className={style.controllerContainer}>
         <button
-          onClick={isClockTiming.handleOn}
+          onClick={() => {
+            if (modes[step].isFocusTime === true) {
+              isFocusTime.handleOn()
+              isBreakTime.handleOff()
+            } else {
+              isFocusTime.handleOff()
+              isBreakTime.handleOn()
+            }
+            newClock.startHandler()
+          }}
           className={style.shadowController}
         >
           <div
             className={clsx(
               style.topController,
-              isClockTiming.isOn && style.controllerPressed
+              newClock.clock && style.controllerPressed
             )}
           >
             <span className={style.textController}>START</span>
@@ -176,7 +106,7 @@ const HomePage: React.FC = () => {
         <button
           onClick={() => {
             // Stops all modes to display the task list
-            isClockTiming.handleOff()
+            newClock.pauseHandler()
             isFocusTime.handleOff()
           }}
           className={style.shadowController}
@@ -184,7 +114,7 @@ const HomePage: React.FC = () => {
           <div
             className={clsx(
               style.topController,
-              !isClockTiming.isOn && style.controllerPressed
+              !newClock.clock && style.controllerPressed
             )}
           >
             <span className={style.textController}>STOP</span>
