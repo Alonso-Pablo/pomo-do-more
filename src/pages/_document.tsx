@@ -16,6 +16,10 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <link rel="manifest" href="/manifest.json" />
+          <meta name="theme-color" content="#D35A44" />
+          <link rel="apple-touch-icon" href="/icon-76x76.png" />
+
           <meta property="twitter:card" content="summary_large_image" />
           <meta
             property="twitter:url"
