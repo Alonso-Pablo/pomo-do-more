@@ -46,6 +46,7 @@ body {
   height: 100%;
   font-family: var(--font-body);
   background-color: var(--tomato-main);
+  transition: all 0.20s linear;
 }
 
 #__next {
