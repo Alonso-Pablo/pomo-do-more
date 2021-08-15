@@ -1,8 +1,4 @@
-// Here will go general types you define
-
-import { Dispatch, SetStateAction } from 'react'
-
-// import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, MutableRefObject, SetStateAction } from 'react'
 
 export type Test = { key: string }
 
@@ -22,6 +18,7 @@ export interface BreakButtonProps {
 export interface ClockProps {
   restartClock: () => void
   timeRest: number
+  buttonPause: MutableRefObject<HTMLAudioElement | undefined>
 }
 export interface TaskListProps {
   isFocusTime: boolean

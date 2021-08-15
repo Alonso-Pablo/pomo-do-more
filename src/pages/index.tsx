@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import style from '../css/components/index.module.css'
 import clsx from 'clsx'
 import PageLayout from 'components/layout/page'
@@ -61,6 +61,17 @@ const HomePage: React.FC = () => {
     nextMode()
   }
 
+  const buttonPlay = useRef<HTMLAudioElement | undefined>(
+    typeof Audio !== 'undefined'
+      ? new Audio('/audio/button_play.mp3')
+      : undefined
+  )
+  const buttonPause = useRef<HTMLAudioElement | undefined>(
+    typeof Audio !== 'undefined'
+      ? new Audio('/audio/button_pause.mp3')
+      : undefined
+  )
+
   return (
     <PageLayout headProps={{ title: 'Pomo Do More' }}>
       <div className={clsx(style.todoList)}>
@@ -75,6 +86,7 @@ const HomePage: React.FC = () => {
       </div>
 
       <Clock
+        buttonPause={buttonPause}
         restartClock={newClock.restartHandler}
         timeRest={newClock.timeRest}
       />
@@ -82,6 +94,7 @@ const HomePage: React.FC = () => {
       <div className={style.controllerContainer}>
         <button
           onClick={() => {
+            buttonPlay.current?.play()
             if (modes[step].isFocusTime === true) {
               isFocusTime.handleOn()
               isBreakTime.handleOff()
@@ -105,6 +118,7 @@ const HomePage: React.FC = () => {
 
         <button
           onClick={() => {
+            buttonPause.current?.play()
             // Stops all modes to display the task list
             newClock.pauseHandler()
             isFocusTime.handleOff()
