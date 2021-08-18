@@ -45,7 +45,7 @@ class MyDocument extends Document {
           <meta
             property="og:image"
             itemProp="image"
-            content="https://raw.githubusercontent.com/Alonso-Pablo/pomo-do-more/master/public/og.png"
+            content="https://raw.githubusercontent.com/Alonso-Pablo/pomo-do-more/master/public/og300.png"
           />
           <meta property="og:image:width" content="300" />
           <meta property="og:image:height" content="300" />
