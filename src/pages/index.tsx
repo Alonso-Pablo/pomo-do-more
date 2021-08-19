@@ -10,20 +10,20 @@ import { useClock } from 'hooks/useClock'
 
 const HomePage: React.FC = () => {
   const pomo = {
-    // timeTotal: 1500,
-    timeTotal: 3, //4dev
+    timeTotal: 1500,
+    // timeTotal: 3, //4dev
     isFocusTime: true,
     isLongBreak: false
   }
   const shortBreak = {
-    // timeTotal: 300,
-    timeTotal: 2, //4dev
+    timeTotal: 300,
+    // timeTotal: 2, //4dev
     isFocusTime: false,
     isLongBreak: false
   }
   const longBreak = {
-    // timeTotal: 1800,
-    timeTotal: 4, //4dev
+    timeTotal: 1800,
+    // timeTotal: 4, //4dev
     isFocusTime: false,
     isLongBreak: true
   }
