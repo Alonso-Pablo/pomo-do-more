@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useRef, useState } from 'react'
 import style from '../css/components/index.module.css'
 import clsx from 'clsx'
@@ -43,6 +44,26 @@ const HomePage: React.FC = () => {
 
   const newClock = useClock(modes[step].timeTotal)
 
+  // Construye la notificacion a mostrar
+  const showNotification = async (
+    title: string,
+    message: string,
+    vibration: VibratePattern,
+    status: string
+  ): Promise<void> => {
+    const registration = await navigator.serviceWorker.getRegistration()
+    if (!registration) return
+    const notifBody = message
+    const notifImg = '/icons/icon-72x72.png'
+    registration.showNotification(title, {
+      body: notifBody,
+      icon: notifImg,
+      vibrate: vibration,
+      tag: status
+    })
+    return
+  }
+
   const nextMode = () => {
     let nextStep = step
     nextStep === 5 ? (nextStep = 0) : (nextStep += 1)
@@ -58,8 +79,8 @@ const HomePage: React.FC = () => {
         [100, 200, 100, 200, 100, 200, 100],
         'focus_time'
       )
+      return
     } else {
-      // Al terminar FocusTime no muestra las tareas, solo muestra "Break"
       if (modes[nextStep].isLongBreak === false) {
         showNotification(
           'Break',
@@ -75,9 +96,11 @@ const HomePage: React.FC = () => {
           'long_break'
         )
       }
+      // Al terminar FocusTime no muestra las tareas, solo muestra "Break"
       isFocusTime.handleOff()
       isBreakTime.handleOn()
       increasePomo.handleOn()
+      return
     }
   }
 
@@ -109,49 +132,6 @@ const HomePage: React.FC = () => {
     })
   }
 
-  // function randomNotification() {
-  //   const notifTitle = 'This is the title.'
-  //   const notifBody = 'Made by Alonso Pablo'
-  //   const notifImg = '/icons/icon-32x32.png'
-  //   const options = {
-  //     body: notifBody,
-  //     icon: notifImg
-  //   }
-  //   new Notification(notifTitle, options)
-  // }
-
-  const showNotification = async (
-    title: string,
-    message: string,
-    vibration: VibratePattern,
-    status: string
-  ): Promise<void> => {
-    const registration = await navigator.serviceWorker.getRegistration()
-    if (!registration) return
-    const notifBody = message
-    const notifImg = '/icons/icon-72x72.png'
-    registration.showNotification(title, {
-      body: notifBody,
-      icon: notifImg,
-      vibrate: vibration,
-      tag: status
-    })
-    return
-  }
-
-  // const showNotification = async () => {
-  //   const registration = await navigator.serviceWorker.getRegistration()
-  //   if (!registration) return
-  //   const notifBody = 'Ding ding ding'
-  //   const notifImg = '/icons/icon-72x72.png'
-  //   registration.showNotification('Listo el timer', {
-  //     body: notifBody,
-  //     icon: notifImg,
-  //     vibrate: [200, 100, 200, 100, 200, 100, 200],
-  //     tag: 'vibration-sample',
-  //   })
-  // }
-
   return (
     <PageLayout headProps={{ title: 'Pomo Do More' }}>
       <div className={clsx(style.todoList)}>
@@ -175,6 +155,7 @@ const HomePage: React.FC = () => {
         <button
           onClick={() => {
             buttonPlay.current?.play()
+            requestNotification()
             if (modes[step].isFocusTime === true) {
               isFocusTime.handleOn()
               isBreakTime.handleOff()
@@ -198,7 +179,6 @@ const HomePage: React.FC = () => {
         <button
           onClick={() => {
             buttonPause.current?.play()
-            requestNotification()
             newClock.pauseHandler()
             isFocusTime.handleOff()
           }}
