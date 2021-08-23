@@ -6,6 +6,12 @@
   "author": "Alonso Pablo",
   "private": false,
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Alonso-Pablo/pomo-do-more/issues"
+  },
+  "keywords": [
+    "pomodore, typescript, nextjs, react"
+  ],
   "scripts": {
     "dev": "next",
     "build": "next build",
