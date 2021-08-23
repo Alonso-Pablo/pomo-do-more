@@ -73,4 +73,21 @@ const cancelSvg = () => (
   </svg>
 )
 
-export { enterArrowSvg, moreOptionsSvg, cancelSvg }
+const grippypart = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="10"
+    height="20"
+    viewBox="0 0 10 20"
+    fill="none"
+  >
+    <rect y="8" width="4" height="4" rx="2" />
+    <rect y="16" width="4" height="4" rx="2" />
+    <rect width="4" height="4" rx="2" />
+    <rect x="6" y="8" width="4" height="4" rx="2" />
+    <rect x="6" y="16" width="4" height="4" rx="2" />
+    <rect x="6" width="4" height="4" rx="2" />
+  </svg>
+)
+
+export { enterArrowSvg, moreOptionsSvg, cancelSvg, grippypart }
