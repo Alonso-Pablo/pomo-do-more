@@ -253,9 +253,11 @@ const TaskList: React.FC<TaskListProps> = ({
                     setItems(newItems)
                     return setItems(Object.values(items))
                   }}
-                  className={clsx(style.optionButtons, style.separatedButton)}
+                  className={style.optionButtons}
                 >
-                  {value[6] ? 'Undone' : 'Done'}
+                  <div className={style.optionButtonsTop}>
+                    {value[6] ? 'Undone' : 'Done'}
+                  </div>
                 </button>
                 <button
                   onClick={() => {
@@ -266,9 +268,9 @@ const TaskList: React.FC<TaskListProps> = ({
                     setItems(newItems)
                     return setItems(Object.values(items))
                   }}
-                  className={clsx(style.optionButtons, style.separatedButton)}
+                  className={style.optionButtons}
                 >
-                  Edit
+                  <div className={style.optionButtonsTop}>Edit</div>
                 </button>
                 <button
                   onClick={() => {
@@ -284,7 +286,7 @@ const TaskList: React.FC<TaskListProps> = ({
                   }}
                   className={style.optionButtons}
                 >
-                  Remove
+                  <div className={style.optionButtonsTop}>Delete</div>
                 </button>
               </div>
             </div>
