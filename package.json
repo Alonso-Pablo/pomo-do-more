@@ -1,10 +1,11 @@
 {
   "name": "pomo-do-more",
   "version": "1.0.0",
-  "description": "A minimalist's boilerplate — Next.js with TypeScript.",
+  "description": "A minimalist Pomodoro clock for do more.",
   "repository": "https://github.com/Alonso-Pablo/pomo-do-more",
-  "author": "basement.studio",
-  "private": true,
+  "author": "Alonso Pablo",
+  "private": false,
+  "license": "MIT",
   "scripts": {
     "dev": "next",
     "build": "next build",
